@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
     const newUser = await new User({
       firstName: req.body.firstName,
       username: req.body.username,
-      imageUrl: `https://robohash.org/${req.body.username}?set=set4`,
+      imageUrl: `https://robohash.org/${req.body.username}.png?set=set4&size=50x50`,
       password: bcrypt.hashSync(req.body.password, 10),
       token: uid2(32),
     }).save();
