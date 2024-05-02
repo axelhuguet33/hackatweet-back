@@ -4,6 +4,15 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/User");
 
+router.get("/:token", async (req, res) => {
+  try {
+    const user = await User.findOne({ token: req.params.token });
+    res.json({ result: true, user });
+  } catch (err) {
+    res.json({ result: false, error: err.message });
+  }
+});
+
 router.post("/signup", async (req, res) => {
   try {
     if (req.body.password.length <= 7)
