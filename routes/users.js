@@ -4,6 +4,10 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/User");
 
+router.get("/", async (req, res) => {
+  res.json({ result: false });
+});
+
 router.get("/:token", async (req, res) => {
   try {
     if (!req.params.token) throw new Error("no token provided");
