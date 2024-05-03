@@ -46,7 +46,6 @@ router.post("/likes", async (req, res) => {
       { likes: [...toUpdate.likes, req.body.token] }
     );
   }
-
   res.json({ result: true });
 });
 
