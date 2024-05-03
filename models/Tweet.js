@@ -17,9 +17,9 @@ const tweetSchema = mongoose.Schema({
   hashtags: {
     type: [String],
   },
-  likeCounter: {
-    type: Number,
-    default: 0,
+  likes: {
+    type: [String],
+    default: [],
   },
 });
 

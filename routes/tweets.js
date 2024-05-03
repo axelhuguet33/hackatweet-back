@@ -33,6 +33,23 @@ router.post("/", async (req, res) => {
   res.json({ result: true, newTweet });
 });
 
+router.post("/likes", async (req, res) => {
+  const toUpdate = await Tweet.findOne({ _id: new ObjectId(req.body._id) });
+  if (toUpdate.likes.includes(req.body.token)) {
+    await Tweet.updateOne(
+      { _id: new ObjectId(req.body._id) },
+      { likes: toUpdate.likes.filter((token) => token !== req.body.token) }
+    );
+  } else {
+    await Tweet.updateOne(
+      { _id: new ObjectId(req.body._id) },
+      { likes: [...toUpdate.likes, req.body.token] }
+    );
+  }
+
+  res.json({ result: true });
+});
+
 router.delete("/:id", async (req, res) => {
   const deletion = await Tweet.findByIdAndDelete(req.params.id);
   res.json({ result: true, deletion });
