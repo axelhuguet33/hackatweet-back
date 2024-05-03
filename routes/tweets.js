@@ -23,6 +23,16 @@ router.get("/", async (req, res) => {
   res.json({ result: true, allTweets });
 });
 
+router.get("/hashtags", async (req, res) => {
+  const allTweets = await Tweet.find({}).populate("user");
+  const allHashtags = allTweets.map((tweet) => tweet.hashtags).flat();
+  const hashtags = allHashtags.reduce((acc, val) => {
+    val in acc ? acc[val]++ : (acc[val] = 1);
+    return acc;
+  }, {});
+  res.json({ result: true, hashtags });
+});
+
 router.delete("/:id", async (req, res) => {
   const deletion = await Tweet.findByIdAndDelete(req.params.id);
   res.json({ result: true, deletion });

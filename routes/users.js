@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 router.get("/:token", async (req, res) => {
   try {
+    if (!req.params.token) throw new Error("no token provided");
     const user = await User.findOne({ token: req.params.token });
     res.json({ result: true, user });
   } catch (err) {
