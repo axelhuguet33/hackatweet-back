@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require("../models/User");
 
 router.get("/", async (req, res) => {
-  res.json({ result: false });
+  res.json({ result: false, user: {} });
 });
 
 router.get("/:token", async (req, res) => {
