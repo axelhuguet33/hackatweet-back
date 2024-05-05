@@ -10,12 +10,16 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/hashtags", async (req, res) => {
-  const allTweets = await Tweet.find({}).populate("user");
+  const allTweets = await Tweet.find({});
   const allHashtags = allTweets.map((tweet) => tweet.hashtags).flat();
-  const hashtags = allHashtags.reduce((acc, val) => {
-    val in acc ? acc[val]++ : (acc[val] = 1);
-    return acc;
-  }, {});
+  const hashtags = allHashtags
+    .reduce((acc, val) => {
+      acc.map((hashtag) => hashtag.tag).includes(val)
+        ? acc[acc.findIndex((hashtag) => hashtag.tag === val)].count++
+        : acc.push({ tag: val, count: 1 });
+      return acc;
+    }, [])
+    .sort((a, b) => b.count - a.count);
   res.json({ result: true, hashtags });
 });
 
